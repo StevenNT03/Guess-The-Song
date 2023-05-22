@@ -21,7 +21,7 @@
 npm i
 '''
 
-###Configuration
+### Configuration
 1. Create a new Spotify Developer Application and obtain the API credentials (client ID and client secret).
 
 
