@@ -27,10 +27,15 @@
 
 # How to Play
 
--The game will display a random song fetched from Spotify.
+-the "menu" part of the game will start after the login and you will have the possibilities to chose a genre.
 
+-The game will display a random song fetched from Spotify based on the genre that you have chosen.
+
+-You will have 60 seconds for guess the song.
 
 -Try to guess the title of the song based on the provided audio preview.
+
+-If you want you can use the ? button for an help but this will cost seconds.
 
 -Enter your guess in the input field and click the "Submit" button.
 
@@ -38,7 +43,6 @@
 
 -Repeat the process to guess more songs and improve.
 
--This game is powered by the Spotify API.
 
 # Exposed API
 -This game exposes a RESTful API that interacts with the Spotify API to fetch random songs and provide song information to the game interface. The API has the following endpoint:
