@@ -224,49 +224,39 @@ html::before {
 </div>
 
     <audio id="audio" controls></audio>
-      <script>
-        const params = new URLSearchParams(window.location.search);
-        const genre = params.get("genre");
-        const headers = { Authorization: "Bearer " + localStorage.getItem("spotify") };
-        var tempo = 60;
+     <script>
+       var spotifyToken = "{{ token }}";
+      const params = new URLSearchParams(window.location.search);
+      const genre = params.get("genre");
+      const headers = { Authorization: "Bearer " + spotifyToken };
+      const endpoint = 'Song/' + spotifyToken + '/' + genre;
+      let tempo=60;
 
-        // ricerca di una canzone casuale del genere selezionato
-        fetch(`https://api.spotify.com/v1/search?q=genre:"${genre}"&type=track&market=IT&limit=50`, { headers })
-          .then((response) => response.json())
-          .then((data) => {
-            const tracks = data.tracks.items;
-            const randomTrack = tracks[Math.floor(Math.random() * tracks.length)];
-            let trackTitle = randomTrack.name.trim().toLowerCase();
+      fetch(endpoint)
+        .then((response) => response.json())
+        .then((data) => {
+          const randomTrack = data;
+          const trackTitle = randomTrack.name.trim().toLowerCase();
 
-            // recupero della copertina dell'album della canzone selezionata
-            const albumId = randomTrack.album.id;
-            fetch(`https://api.spotify.com/v1/albums/${albumId}`, { headers })
-              .then((response) => response.json())
-              .then((data) => {
-                const imageUrl = data.images[0].url;
-                document.body.style.backgroundImage = `url(${imageUrl})`;
+          // Imposta lo sfondo
+          const imageUrl = randomTrack.albumImageUrl;
+          document.body.style.backgroundImage = `url(${imageUrl})`;
 
-      // riproduzione della canzone selezionata
-      const audio = document.getElementById("audio");
-      audio.src = randomTrack.preview_url;
+          // Riproduci la canzone
+          const audio = document.getElementById("audio");
+          audio.src = randomTrack.previewUrl;
+          audio.play();
+
+          // Mostra l'immagine del profilo dell'artista
+          const artistImageUrl = randomTrack.artistImageUrl;
+          const profileImg = document.getElementById("profile-img");
+          profileImg.src = artistImageUrl;
+
+          // Mostra il nome dell'artista
+          const artistNameElem = document.getElementById("artist-name");
+          artistNameElem.innerHTML = randomTrack.artistName;
+
       
-      audio.play();
-
-                // recupero dell'immagine profilo e del nome dell'artista
-                const artistId = randomTrack.artists[0].id;
-                fetch(`https://api.spotify.com/v1/artists/${artistId}`, { headers })
-                  .then((response) => response.json())
-                  .then((data) => {
-                    const artistImageUrl = data.images[0].url;
-                    const artistName = data.name;
-                    const profileImg = document.getElementById("profile-img");
-                    profileImg.src = artistImageUrl;
-                    const artistNameElem = document.getElementById("artist-name");
-                    artistNameElem.innerHTML = artistName;
-                  })
-                  .catch((error) => console.log(error));
-              })
-              .catch((error) => console.log(error));
 
               //gestione della stringa di help
               const wordH= randomTrack.name.replace(/\((rmx|feat|feat.|con|with)[^)]*\)/gi, "").trim();
@@ -281,18 +271,18 @@ html::before {
                 hintIndices.add(randomIndex);
               }
 
-             let hint = '';
-for (let i = 0; i < wordLength; i++) {
-  if (hintIndices.has(i)) {
-    hint += word[i];
-  } else {
-    if (word[i] === ' ' || word[i] === ',' || word[i] === '\'') {
-      hint += word[i];
-    } else {
-      hint += '-';
-    }
-  }
-}
+                          let hint = '';
+              for (let i = 0; i < wordLength; i++) {
+                if (hintIndices.has(i)) {
+                  hint += word[i];
+                } else {
+                  if (word[i] === ' ' || word[i] === ',' || word[i] === '\'') {
+                    hint += word[i];
+                  } else {
+                    hint += '-';
+                  }
+                }
+              }
       // Mostra la finestra di aiuto quando il bottone di help viene cliccato
       const helpToggle = document.getElementById("help-toggle");
       const helpContainer = document.getElementById("input-container");
@@ -393,16 +383,16 @@ input.value=hint;
         // Esegui la funzione aggiornaTimer ogni secondo
         setInterval(aggiornaTimer, 1000);
 
-    const audio = document.getElementById("audio");
+    const audi = document.getElementById("audio");
 
     function handleKeyPress(event) {
        if (event.code === "Space") {
     if (event.target.tagName !== "INPUT") {
       event.preventDefault();
       if (audio.paused) {
-        audio.play();
+        audi.play();
       } else {
-        audio.pause();
+        audi.pause();
       }
     }
   }
