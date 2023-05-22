@@ -1,31 +1,37 @@
+
 # Guess-The-Song
 -This is an interactive game where you have to guess the title of a random song provided by Spotify.
 
-# Getting Started
+## Getting Started
 -To play the game, you'll need to have the following prerequisites:
   *Node.js installed on your machine
   *Spotify Developer Account and API credential
   
   # Installation
--Clone the repository:
--git clone https://github.com/your-username/guess-the-song.git
--Navigate to the project directory:
+1. Clone the repository:
+'''
+>git clone https://github.com/your-username/guess-the-song.git
+'''
+2. Navigate to the project directory:
+'''
+> cd guess-the-song
+'''
+3. Install the dependencies:
+'''
+npm i
+'''
 
--cd guess-the-song
--Install the dependencies:
+###Configuration
+1. Create a new Spotify Developer Application and obtain the API credentials (client ID and client secret).
 
--npm i
--Configuration
--Create a new Spotify Developer Application and obtain the API credentials (client ID and client secret).
 
--REDIRECT_URI=http://localhost:3000/
--Starting the Game
--Start the game server:
+2. Start the game server:
+'''
+> npm start
+'''
+3. Open your web browser and visit http://localhost:3000 to access the game.
 
--npm start
--Open your web browser and visit http://localhost:3000 to access the game.
-
-# How to Play
+## How to Play
 
 -the "menu" part of the game will start after the login and you will have the possibilities to chose a genre.
 
@@ -46,9 +52,9 @@
 
 # Exposed API
 -This game exposes a RESTful API that interacts with the Spotify API to fetch random songs and provide song information to the game interface. The API has the following endpoint:
-
--GET /Song/:token/:genre
-
+'''
+GET /Song/:token/:genre
+'''
 -This endpoint retrieves a random song based on the specified genre and the user's Spotify access token. It returns the following information about the song:
 
 -trackTitle: The title of the song.
@@ -61,18 +67,18 @@
 
 # Example
 -request
-   
+  '''
    GET /Song/your-access-token/rock
-
+  '''
 -response 
-
+'''json
  {
   "trackTitle": "Some Song",
   "albumCoverUrl": "https://example.com/album-cover.jpg",
   "artistImage": "https://example.com/artist-profile.jpg",
   "artistName": "Some Artist"
 }
-
+'''
 Please note that the access token must be a valid and authorized Spotify access token with the necessary scopes to retrieve song information.
 
 # Contributing
@@ -91,5 +97,4 @@ Please note that the access token must be a valid and authorized Spotify access 
 -Feel free to explore and utilize this API for other projects or extend its functionality as per your requirements.
 
 Happy gaming and enjoy guessing the songs!
-
 
