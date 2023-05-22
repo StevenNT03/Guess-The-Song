@@ -25,7 +25,8 @@
 -npm start
 -Open your web browser and visit http://localhost:3000 to access the game.
 
--How to Play
+# How to Play
+
 -The game will display a random song fetched from Spotify.
 
 
