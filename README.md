@@ -5,9 +5,8 @@ This is an interactive game where you have to guess the title of a random song p
 ## Getting Started
 To play the game, you'll need to have the following prerequisites:
 
-  *Node.js installed on your machine
-  
-  *Spotify Developer Account and API credential
+  * Node.js installed on your machine
+  * Spotify Developer Account and API credential
   
   # Installation
 1. Clone the repository:
@@ -64,13 +63,10 @@ GET /Song/:token/:genre
 
 This endpoint retrieves a random song based on the specified genre and the user's Spotify access token. It returns the following information about the song:
 
-*trackTitle: The title of the song.
-
-*albumCoverUrl: The URL of the album cover image.
-
-*artistImage: The URL of the artist's profile image.
-
-*artistName: The name of the artist.
+* trackTitle: The title of the song.
+*  albumCoverUrl: The URL of the album cover image.
+* artistImage: The URL of the artist's profile image.
+* artistName: The name of the artist.
 
 
 *To use this endpoint, make a GET request to /Song/:token/:genre, where :token is the user's Spotify access token and :genre is the desired genre for the random song.
@@ -85,10 +81,10 @@ This endpoint retrieves a random song based on the specified genre and the user'
 
 ```
 {
-"trackTitle": "Some Song",
-"albumCoverUrl": "https://example.com/album-cover.jpg",
-"artistImage": "https://example.com/artist-profile.jpg",
-"artistName": "Some Artist"
+    "trackTitle": "Some Song",
+    "albumCoverUrl": "https://example.com/album-cover.jpg",
+    "artistImage": "https://example.com/artist-profile.jpg",
+    "artistName": "Some Artist"
 }
 ```
 Please note that the access token must be a valid and authorized Spotify access token with the necessary scopes to retrieve song information.
