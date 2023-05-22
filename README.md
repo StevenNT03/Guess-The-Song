@@ -59,9 +59,9 @@ npm i
 
 # Exposed API
 -This game exposes a RESTful API that interacts with the Spotify API to fetch random songs and provide song information to the game interface. The API has the following endpoint:
-'''
+
 GET /Song/:token/:genre
-'''
+
 -This endpoint retrieves a random song based on the specified genre and the user's Spotify access token. It returns the following information about the song:
 
 -trackTitle: The title of the song.
@@ -74,18 +74,20 @@ GET /Song/:token/:genre
 
 # Example
 -request
-  '''
+   
    GET /Song/your-access-token/rock
-  '''
+
 -response 
-'''json
- {
-  "trackTitle": "Some Song",
-  "albumCoverUrl": "https://example.com/album-cover.jpg",
-  "artistImage": "https://example.com/artist-profile.jpg",
-  "artistName": "Some Artist"
+
+
+```
+{
+"trackTitle": "Some Song",
+"albumCoverUrl": "https://example.com/album-cover.jpg",
+"artistImage": "https://example.com/artist-profile.jpg",
+"artistName": "Some Artist"
 }
-'''
+```
 Please note that the access token must be a valid and authorized Spotify access token with the necessary scopes to retrieve song information.
 
 # Contributing
