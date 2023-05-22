@@ -93,13 +93,10 @@ Please note that the access token must be a valid and authorized Spotify access 
 
 Contributions to improve the game are welcome! Here are a few ways you can contribute:
 
-*Add new features or game mechanics
-
-*Improve the user interface and experience
-
-*Fix bugs and issues
-
-*Please create a pull request with your proposed changes, and they will be reviewed for inclusion.
+* Add new features or game mechanics
+* Improve the user interface and experience
+* Fix bugs and issues
+* Please create a pull request with your proposed changes, and they will be reviewed for inclusion.
 
 # Conclusion
 
