@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <style>
+      
+      #audio {
+  position: fixed;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+html::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(5px);
+  z-index: -1;
+}
+
+#audio:hover {
+  opacity: 1;
+  background-color: white;
+}
+      html {
+        height: 100%;
+        width: 100%;
+      
+
+      }
+      body {
+        height: 100%;
+        margin: 0;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+  
+      audio {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+      }
+      #input {
+        display: block;
+        margin: auto;
+        border: none;
+        text-align: center;
+        margin-top: 20px;
+        font-size: 24px;
+        width: 30%;
+          border-radius: 30px;
+        height: 40px;
+        padding: 10px;
+      }
+      #input:hover{
+        background-color: white;
+        border: none;
+      }
+      #input::selection{
+        border:none;
+      }
+      #submit {
+        display: block;
+        margin: auto;
+        margin-top: 20px;
+        font-size: 24px;
+        width: 20%;
+        height: 40px;
+      }
+      #profile-img {
+        display: block;
+        margin: auto;
+        margin-top: 20px;
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+      }
+      #artist-name {
+        display: block;
+        margin: auto;
+        margin-top: 20px;
+        font-size: 36px;
+        font-weight: bold;
+        text-align: center;
+        color: white;
+      }
+      #submit {
+  display: block;
+  margin: auto;
+  margin-top: 20px;
+  font-size: 24px;
+  width: 20%;
+  height: 40px;
+  border-radius: 20px;
+  border: none;
+  background-color: white;
+  color: black;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease;
+}
+#submit:hover {
+  background-color: black;
+  color: white;
+  }
+  #help-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+#help-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+#help-toggle {
+  background-color: transparent;
+  border: none;
+  width: fit-content;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+#help-toggle img {
+  width: 20px;
+  height: 20px;
+}
+
+/* Mostra la finestra di aiuto quando viene aperta */
+#help-container.show {
+  display: flex;
+}
+
+#help-close {
+  background-color: transparent;
+  border: none;
+}
+#aiuto{
+  color:rgb(0, 0, 0);
+  font-size: larger;
+}
+
+#artist-name{
+  background-color: white;
+  width: fit-content;
+  border-radius: 30px;
+  color: rgba(0, 0, 0, 0.8);
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  padding: 5px;
+}
+
+#help-close img {
+  width: 20px;
+  height: 20px;
+}
+#timer-container {
+  position: relative;
+}
+#timer {
+  position: absolute;
+  color: black;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  font-size : 20px;
+}
+
+#timer-container {
+  position: relative;
+  background-color: white;
+  border-radius: 50px;
+  width: 50px;
+  height: 50px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+  
+    </style>
+  </head>
+  <body>
+    <div id="timer-container">
+  
+       <span id="timer"></span>
+    </div>
+     <div id="form-container">
+    <img id="profile-img" src="" alt="Profile Image">
+    <div id="artist-name"></div>
+    <div id="input-container">
+    <input type="text" id="input" placeholder="Inserisci il titolo della canzone">
+    </div>
+
+    <button id="submit">Invia</button>
+     </div>
+     <button id="help-toggle">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/AIGA_information.svg/800px-AIGA_information.svg.png" alt="Help Icon" width="20" height="20">
+</button>
+
+<!-- Aggiungi la finestra di aiuto -->
+<div id="help-container">
+  <div id="help-content">
+    <!-- Aggiungi il bottone per chiudere la finestra di aiuto -->
+    <button id="help-close">
+      <img src="https://www.svgrepo.com/show/506648/clear.svg" alt="Close Icon" width="20" height="20">
+    </button>
+    <p id="aiuto"></p>
+  </div>
+</div>
+
+    <audio id="audio" controls></audio>
+      <script>
+        const params = new URLSearchParams(window.location.search);
+        const genre = params.get("genre");
+        const headers = { Authorization: "Bearer " + localStorage.getItem("spotify") };
+        var tempo = 60;
+
+        // ricerca di una canzone casuale del genere selezionato
+        fetch(`https://api.spotify.com/v1/search?q=genre:"${genre}"&type=track&market=IT&limit=50`, { headers })
+          .then((response) => response.json())
+          .then((data) => {
+            const tracks = data.tracks.items;
+            const randomTrack = tracks[Math.floor(Math.random() * tracks.length)];
+            let trackTitle = randomTrack.name.trim().toLowerCase();
+
+            // recupero della copertina dell'album della canzone selezionata
+            const albumId = randomTrack.album.id;
+            fetch(`https://api.spotify.com/v1/albums/${albumId}`, { headers })
+              .then((response) => response.json())
+              .then((data) => {
+                const imageUrl = data.images[0].url;
+                document.body.style.backgroundImage = `url(${imageUrl})`;
+
+      // riproduzione della canzone selezionata
+      const audio = document.getElementById("audio");
+      audio.src = randomTrack.preview_url;
+      
+      audio.play();
+
+                // recupero dell'immagine profilo e del nome dell'artista
+                const artistId = randomTrack.artists[0].id;
+                fetch(`https://api.spotify.com/v1/artists/${artistId}`, { headers })
+                  .then((response) => response.json())
+                  .then((data) => {
+                    const artistImageUrl = data.images[0].url;
+                    const artistName = data.name;
+                    const profileImg = document.getElementById("profile-img");
+                    profileImg.src = artistImageUrl;
+                    const artistNameElem = document.getElementById("artist-name");
+                    artistNameElem.innerHTML = artistName;
+                  })
+                  .catch((error) => console.log(error));
+              })
+              .catch((error) => console.log(error));
+
+              //gestione della stringa di help
+              const wordH= randomTrack.name.replace(/\((rmx|feat|feat.|con|with)[^)]*\)/gi, "").trim();
+              const word= wordH.toLowerCase();
+              const wordLength = word.length;
+              const hintLength = Math.floor(wordLength / 2);
+
+              const hintIndices = new Set();
+
+              while (hintIndices.size < hintLength) {
+                const randomIndex = Math.floor(Math.random() * wordLength);
+                hintIndices.add(randomIndex);
+              }
+
+             let hint = '';
+for (let i = 0; i < wordLength; i++) {
+  if (hintIndices.has(i)) {
+    hint += word[i];
+  } else {
+    if (word[i] === ' ' || word[i] === ',' || word[i] === '\'') {
+      hint += word[i];
+    } else {
+      hint += '-';
+    }
+  }
+}
+      // Mostra la finestra di aiuto quando il bottone di help viene cliccato
+      const helpToggle = document.getElementById("help-toggle");
+      const helpContainer = document.getElementById("input-container");
+      const helpClose = document.getElementById("help-close");
+      helpToggle.addEventListener("click", () => {
+        helpToggle.disabled=true;
+const input = document.getElementById("input");
+let arrayPos = []; 
+input.value=hint;
+ input.onkeydown = (event) => { console.log(event); 
+ const invalidKeys = [9, 32, 222,192]; // Codici dei tasti da disabilitare (Tab, Spazio, Apostrofo)
+
+  if (invalidKeys.includes(event.keyCode)) {
+    return false; // Blocca l'azione del tasto
+  }
+ let text = input.value;
+  if (event.keyCode == 8) { 
+    if (arrayPos.length > 0) { 
+    let pos = arrayPos[arrayPos.length - 1];
+   input.value = text.substring(0, pos) + '-' + text.substring(pos + 1); arrayPos.splice(arrayPos.length - 1); 
+   } return false; 
+   }
+  let c = event.key; 
+   let index = text.indexOf('-'); 
+   if (index > -1) { 
+    arrayPos.push(index); 
+    input.value = text.substring(0, index) + c + text.substring(index + 1);
+     } return false; 
+     };
+
+
+
+
+
+
+
+        tempo-=20;
+        helpContainer.classList.toggle("show");
+      });
+      // Chiudi la finestra di aiuto quando il bottone di close viene cliccato
+      helpClose.addEventListener("click", () => {
+        helpContainer.classList.remove("show");
+      });
+
+
+
+
+        
+
+        // gestione dell'invio del titolo inserito dall'utente
+          const input = document.getElementById("input");
+          const submit = document.getElementById("submit");
+          const TT=trackTitle;
+        submit.addEventListener("click", () => {
+      const userTitle = input.value.trim().toLowerCase();
+      let trackTitle = randomTrack.name.trim().toLowerCase();
+      
+      trackTitle = trackTitle.replace(/\((rmx|feat|feat.|con|with)[^)]*\)/gi, "").trim();
+      
+    if (userTitle === trackTitle) {
+      window.location.replace(`http://localhost:3000/WinOrLose?token=${localStorage.getItem('spotify')}&genre=${genre}&win=true&correctTitle=${trackTitle}`);
+    } else {
+      window.location.replace(`http://localhost:3000/WinOrLose?token=${localStorage.getItem('spotify')}&genre=${genre}&win=false&correctTitle=${trackTitle}`);
+    }
+        });
+      input.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter') {
+        const userTitle = input.value.trim().toLowerCase();
+        
+        
+        // rimuove tutto ciò che c'è tra parentesi
+        trackTitle = trackTitle.replace(/\((rmx|feat|feat.|con|with)[^)]*\)/gi, "").trim();
+        
+        if (userTitle === trackTitle) {
+          window.location.replace(`http://localhost:3000/WinOrLose?token=${localStorage.getItem('spotify')}&genre=${genre}&win=true&correctTitle=${TT}`);
+        } else {
+          window.location.replace(`http://localhost:3000/WinOrLose?token=${localStorage.getItem('spotify')}&genre=${genre}&win=false&correctTitle=${TT}`);
+        }
+      }
+      
+    });
+       
+        
+        // Funzione che aggiorna il timer ogni secondo
+        function aggiornaTimer() {
+          // Aggiorna il tempo rimanente
+          tempo--;
+          // Aggiorna l'elemento HTML per mostrare il tempo rimanente
+          document.getElementById("timer").innerHTML = tempo;
+          
+          // Se il tempo è scaduto, reindirizza l'utente a un'altra pagina
+            if (tempo <= 0) {
+            window.location.replace(`http://localhost:3000/WinOrLose?token=${localStorage.getItem('spotify')}&genre=${genre}&win=false&correctTitle=${trackTitle}`);
+            
+    }
+        }
+        
+        // Esegui la funzione aggiornaTimer ogni secondo
+        setInterval(aggiornaTimer, 1000);
+
+    const audio = document.getElementById("audio");
+
+    function handleKeyPress(event) {
+       if (event.code === "Space") {
+    if (event.target.tagName !== "INPUT") {
+      event.preventDefault();
+      if (audio.paused) {
+        audio.play();
+      } else {
+        audio.pause();
+      }
+    }
+  }
+}
+
+  document.addEventListener("keydown", handleKeyPress);
+  
+    
+      
+     
+
+        });
+
+      </script>
+      
+
+  </body>
+</html>

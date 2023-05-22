@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <title></title>
+        
+    </head>
+   <body onload="Play()">
+       
+    </body>
+    <script>
+        function Play(){
+       const url = new URLSearchParams(window.location.hash.substring(1));
+       const  token = url.get("access_token");
+       localStorage.setItem('spotify', token);
+       window.location.replace("http://localhost:3000/GameMode?token="+localStorage.getItem('spotify'));
+        }
+    </script>
+</html>

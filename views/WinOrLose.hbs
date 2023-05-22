@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+		body {
+			background-image: url("https://c.wallhere.com/photos/48/db/loneliness_isolation_sadness-99887.jpg!d");
+			background-repeat: no-repeat;
+			background-size: cover;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			height: 100vh;
+			margin: 0;
+		}
+
+		html::before {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			backdrop-filter: blur(5px);
+			z-index: -1;
+		}
+
+		h1 {
+			font-size: 2.5rem;
+			margin-bottom: 2rem;
+		}
+
+		button {
+			background-color: transparent;
+			color: white;
+			border: none;
+			padding: 1rem 2rem;
+			font-size: 1.5rem;
+			margin-top: 10px;
+			cursor: pointer;
+			margin-right: 1rem;
+			margin-bottom: 1rem;
+			border-radius: 50px;
+			transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+		}
+
+		button:hover {
+			background-color: white;
+			color: black;
+		}
+
+		.win {
+			background-image: url("https://img.freepik.com/premium-photo/happy-birthday-party-accessories-white-background_87742-14872.jpg");
+			flex-direction: column;
+		}
+
+		.win h1, .win button {
+			color: white;
+		}
+
+		.win button:hover {
+			color: black;
+			background-color: white;
+		}
+
+		.buttons {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.form {
+			background-color: black;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			width: fit-content;
+			height: fit-content;
+			padding: 20px;
+			border-radius: 50px;
+		}
+
+		.form h1 {
+			color: white;
+			font-size: 2rem;
+			margin-bottom: 20px;
+		}
+	</style>
+</head>
+<body>
+	<div class="form">
+	<div id="result-container">
+<h1>
+</h1>
+</div>
+	<div class="buttons">
+		<button class="play-again">Gioca ancora</button>
+		<button class="change-mode">Cambia modalità</button>
+	</div>
+	</div>
+
+	<script>
+		const urlParams = new URLSearchParams(window.location.search);
+		const win = urlParams.get('win');
+		const genre = urlParams.get('genre');
+		const correctTitle = urlParams.get('correctTitle');
+
+		const h1 = document.querySelector('h1');
+		const playAgainBtn = document.querySelector('.play-again');
+		const changeModeBtn = document.querySelector('.change-mode');
+		const body = document.querySelector('body');
+
+		if (win === 'true') {
+			h1.innerText = 'Hai vinto!';
+			body.classList.add('win');
+			playAgainBtn.style.display = 'block';
+			changeModeBtn.style.display = 'block';
+		} else {
+			h1.innerText = 'Hai perso, il titolo corretto è: \n\n '+correctTitle+"";
+		}
+
+		playAgainBtn.addEventListener('click', () => {
+			// Redirect alla pagina del gioco con lo stesso genere
+			window.location.replace(`http://localhost:3000/SaraBanda?token=${localStorage.getItem('spotify')}&genre=${genre}`);
+		});
+
+		changeModeBtn.addEventListener('click', () => {
+			// Redirect alla pagina delle modalità
+			window.location.replace(`http://localhost:3000/GameMode?token=${localStorage.getItem('spotify')}`);
+		});
+	</script>
+</body>
+</html>

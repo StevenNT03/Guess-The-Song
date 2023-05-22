@@ -1,0 +1,80 @@
+<html>
+    <head>
+        <title>SaraBanda</title>
+    </head>
+    <body>
+        <form>
+            <input type="button" onclick="registra()" value="Accedi">
+        </form>
+        
+    </body>
+    <script>
+        function registra() {
+        let spotifyBaseUrl= 'https://accounts.spotify.com/authorize';
+        let clientId = '5f9ffd679077486b8f08983ed1aa45b7';
+        let  redirectUrl='http://localhost:3000/home'
+        window.location.href = spotifyBaseUrl + '?client_id=' + clientId+ '&redirect_uri=' + redirectUrl + '&response_type=token&show_dialog=true';
+    
+        }
+       
+    </script>
+
+    
+<style>
+    
+
+body {
+  background-image: url("https://c1.wallpaperflare.com/preview/156/689/137/music-studio-music-studio-sound.jpg");
+  background-size: cover;
+  background-position: center;
+  image-resolution: initial;
+  image-rendering: auto;
+  backdrop-filter: blur(5px);
+  height: 100%;
+  width: 100%;
+  border: none;
+}
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(5px);
+  z-index: -1;
+}
+
+input[type="button"] {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+  color:  #000000;
+  text-decoration: none;
+  line-height: 1.2;
+  font-weight: normal;
+  font-family: sans-serif;
+  font-size: 18px;
+  background-color: transparent;
+  border-radius: 30px;
+  padding: 7px 50px;
+  border: 2px solid #FFFFFF;
+  cursor: pointer;
+}
+
+input[type="button"]:hover {
+  background-color: #1DB954;
+  border-color: #1DB954;
+  color: #FFFFFF;
+}
+
+
+
+
+    </style>
+</html>
+
