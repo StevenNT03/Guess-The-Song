@@ -10,15 +10,21 @@
   # Installation
 1. Clone the repository:
 '''
->git clone https://github.com/your-username/guess-the-song.git
+<pre><code class="copy-to-clipboard">
+> git clone https://github.com/your-username/guess-the-song.git
+</code></pre>
 '''
 2. Navigate to the project directory:
 '''
+<pre><code class="copy-to-clipboard">
 > cd guess-the-song
+</code></pre>
 '''
 3. Install the dependencies:
 '''
+<pre><code class="copy-to-clipboard">
 npm i
+</code></pre>
 '''
 
 ### Configuration
@@ -27,7 +33,8 @@ npm i
 
 2. Start the game server:
 '''
-> npm start
+<pre><code class="copy-to-clipboard">
+> npm start </code></pre>
 '''
 3. Open your web browser and visit http://localhost:3000 to access the game.
 
