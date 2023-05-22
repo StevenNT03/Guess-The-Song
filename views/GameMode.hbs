@@ -124,12 +124,13 @@ button:hover {
     <div id="buttons-container"></div>
 
     <script>
+      var spotifyToken = "{{ token }}";
       const buttonsContainer = document.getElementById("buttons-container");
       let genres = [];
 
       fetch("https://api.spotify.com/v1/recommendations/available-genre-seeds", {
         headers: {
-          Authorization: "Bearer " + localStorage.getItem("spotify"), 
+          Authorization: "Bearer " + spotifyToken, 
         },
       })
         .then((response) => response.json())
@@ -145,7 +146,7 @@ button:hover {
           button.innerText = genre;
          
           button.value = genre;
-          button.onclick = () =>  window.location.replace("http://localhost:3000/SaraBanda?token="+localStorage.getItem('spotify')+"&genre="+button.value);
+          button.onclick = () =>  window.location.replace("http://localhost:3000/SaraBanda?token="+spotifyToken+"&genre="+button.value);
           buttonsContainer.appendChild(button);
         });
       }
