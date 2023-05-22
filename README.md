@@ -24,7 +24,7 @@ To play the game, you'll need to have the following prerequisites:
 3. Install the dependencies:
 
 ```
-npm i
+> npm i
 ```
 
 ### Configuration
