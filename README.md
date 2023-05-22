@@ -8,17 +8,17 @@
   
   # Installation
 -Clone the repository:
--git clone https://github.com/your-username/spotify-guess-the-song-game.git
+-git clone https://github.com/your-username/guess-the-song.git
 -Navigate to the project directory:
 
--cd spotify-guess-the-song-game
+-cd guess-the-song
 -Install the dependencies:
 
 -npm i
 -Configuration
 -Create a new Spotify Developer Application and obtain the API credentials (client ID and client secret).
 
--REDIRECT_URI=http://localhost:3000/callback
+-REDIRECT_URI=http://localhost:3000/
 -Starting the Game
 -Start the game server:
 
